@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 namespace Developer_Test
 {
-    // Time spent: 12 hours
     class GUI : Form
     {
         private Panel mainPanel;
