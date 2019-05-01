@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Developer_Test;
 using System.Linq;
+using System;
 
 namespace UnitTests
 {
@@ -8,12 +9,12 @@ namespace UnitTests
     public class DatabaseTests
     {
         private Model model;
-        
+
         [TestInitialize]
         public void TestInitialize()
         {
             model = new Model("Car_Rentals_Test.db");
-            model.SaveRental("A33", "19/07/2000 00:00:00", CarCategories.SmallCar.ToString(), "19/07/2010 00:00:00", "80");
+            model.SaveRental("A33", new DateTime(2000, 07, 19).ToString(), CarCategories.SmallCar.ToString(), new DateTime(2010, 07, 19).ToString(), "80");
         }
 
         [TestCleanup]
@@ -25,7 +26,7 @@ namespace UnitTests
         [TestMethod]
         public void SaveRental_InsertRentalToDatabase_InDatabase()
         {
-            model.SaveRental("A73", "19/07/2000 00:00:00", CarCategories.Van.ToString(), "19/07/2010 00:00:00", "54");
+            model.SaveRental("A73", new DateTime(2000, 07, 19).ToString(), CarCategories.Van.ToString(), new DateTime(2010, 07, 19).ToString(), "54");
 
             var savedRental = model.database.CarRentals.Where(x => x.BookingNumber == "A73").FirstOrDefault();
 
@@ -37,11 +38,11 @@ namespace UnitTests
         [TestMethod]
         public void SaveReturnDate_UpdateReturnTime_InDatabase()
         {
-            model.SaveReturnDate("A33", "21/07/2010 00:00:00");
+            model.SaveReturnDate("A33", new DateTime(2010, 07, 21).ToString());
 
             var updatedRental = model.database.CarRentals.Where(x => x.BookingNumber == "A33").First();
 
-            Assert.AreEqual("21/07/2010 00:00:00", updatedRental.ReturnDate.ToString());
+            Assert.AreEqual(new DateTime(2010, 07, 21).ToString(), updatedRental.ReturnDate.ToString());
         }
     }
 }

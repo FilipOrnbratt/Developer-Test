@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Developer_Test
 {
-    // Time spent: 9 hours
+    // Time spent: 12 hours
     class GUI : Form
     {
         private Panel mainPanel;
@@ -56,7 +56,7 @@ namespace Developer_Test
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.newRentalButton = new System.Windows.Forms.Button();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -140,14 +140,14 @@ namespace Developer_Test
             this.rentalLog.AllowUserToDeleteRows = false;
             this.rentalLog.AllowUserToResizeRows = false;
             this.rentalLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.rentalLog.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.rentalLog.DefaultCellStyle = dataGridViewCellStyle1;
             this.rentalLog.Location = new System.Drawing.Point(0, 40);
             this.rentalLog.MultiSelect = false;
             this.rentalLog.Name = "rentalLog";
@@ -403,9 +403,9 @@ namespace Developer_Test
             // GUI
             // 
             this.ClientSize = new System.Drawing.Size(746, 528);
-            this.Controls.Add(this.returnPanel);
             this.Controls.Add(this.rentalPanel);
             this.Controls.Add(this.mainPanel);
+            this.Controls.Add(this.returnPanel);
             this.Name = "GUI";
             this.mainPanel.ResumeLayout(false);
             this.mainPanel.PerformLayout();
@@ -428,14 +428,12 @@ namespace Developer_Test
 
         private void NewRentalButton_Click(object sender, EventArgs e)
         {
-            this.BookingNumberInput.Text = string.Empty;
-            this.CustomerBirthDateInput.Text = "19/07/2000 00:00:00";
-            this.CarCategoryInput.SelectedIndex = 0;
-            this.MilageInput.Text = string.Empty;
-            this.RentalDateInput.Text = DateTime.Now.ToString();
+            ResetRentalInputs();
 
             this.mainPanel.Visible = false;
             this.rentalPanel.Visible = true;
+
+            
         }
 
         private void ReturnRentalButton_Click(object sender, EventArgs e)
@@ -490,6 +488,20 @@ namespace Developer_Test
             BackToMain(rentalPanel);
         }
 
+        private void ResetRentalInputs()
+        {
+            this.BookingNumberInput.Text = string.Empty;
+            this.CustomerBirthDateInput.Text = (DateTime.Now.Date.AddYears(-20)).ToString();
+            this.CarCategoryInput.SelectedIndex = 0;
+            this.MilageInput.Text = string.Empty;
+            this.RentalDateInput.Text = DateTime.Now.ToString();
+
+            this.BookingNumberInput.BackColor = Color.White;
+            this.CustomerBirthDateInput.BackColor = Color.White;
+            this.RentalDateInput.BackColor = Color.White;
+            this.MilageInput.BackColor = Color.White;
+        }
+
         private void ReturnConfimButton_Click(object sender, EventArgs e)
         {
             int validationError = model.ValidateReturnData(this.ReturnBookingNumberInput.Text, this.ReturnMilageInput.Text, this.ReturnDateInput.Text);
@@ -538,6 +550,9 @@ namespace Developer_Test
             this.ReturnMilageInput.Text = string.Empty;
             this.priceLabel.Text = string.Empty;
             ReturnConfimButton.Enabled = false;
+
+            this.ReturnMilageInput.BackColor = Color.White;
+            this.ReturnDateInput.BackColor = Color.White;
         }
     }
 }
